@@ -3,6 +3,7 @@ package fr.ced.fizzbuzz.generator;
 import fr.ced.fizzbuzz.generator.model.IntMatcher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/fizzbuzz")
 @RequiredArgsConstructor
+@Qualifier("fizzBuzzController")
 @Slf4j
 public class FizzBuzzController {
 

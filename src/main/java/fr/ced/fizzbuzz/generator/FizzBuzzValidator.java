@@ -15,8 +15,8 @@ public class FizzBuzzValidator {
         if(limit > 100){
             throw new BadArgumentsException("Limit cannot exceed 100");
         }
-        if(limit < 0){
-            throw new BadArgumentsException("Limit cannot be negative");
+        if(limit <= 0){
+            throw new BadArgumentsException("Limit cannot be negative or 0");
         }
     }
 
