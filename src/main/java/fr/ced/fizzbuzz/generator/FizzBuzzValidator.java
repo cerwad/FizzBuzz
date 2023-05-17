@@ -5,6 +5,9 @@ import fr.ced.fizzbuzz.commons.errors.MissingRequiredArgument;
 import fr.ced.fizzbuzz.generator.model.IntMatcher;
 import org.springframework.stereotype.Component;
 
+/**
+ * Argument validator for the Fizzbuzz service
+ */
 @Component
 public class FizzBuzzValidator {
 

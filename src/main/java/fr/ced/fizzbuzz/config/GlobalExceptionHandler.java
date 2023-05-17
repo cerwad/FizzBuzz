@@ -10,6 +10,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.net.URI;
 import java.time.Instant;
 
+/**
+ * Global Exception handler following RFC7807
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
