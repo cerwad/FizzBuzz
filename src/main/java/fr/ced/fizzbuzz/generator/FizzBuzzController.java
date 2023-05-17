@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class FizzBuzzController {
 
     private final FizzBuzzValidator fizzBuzzValidator;
-
+    private final FizzBuzzService fizzBuzzService;
     @GetMapping("/")
     public String home(){
         return "Please call /generate?int1=3&text1=Fizz&int2=5&text2=Buzz&limit=100 to test this server";
@@ -31,7 +31,7 @@ public class FizzBuzzController {
         fizzBuzzValidator.validateMatcher(intMatcher1, limit);
         fizzBuzzValidator.validateMatcher(intMatcher2, limit);
 
-        return String.format("placeholder i1: %d s1: %s i2: %d s2: %s lim: %d", int1, text1, int2, text2, limit);
+        return fizzBuzzService.generateFizzBuzzString(intMatcher1, intMatcher2, limit);
     }
 
     @GetMapping("/stats")
