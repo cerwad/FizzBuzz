@@ -51,8 +51,8 @@ class FizzBuzzControllerTest {
 
     @Test
     void generate() throws Exception {
-        this.mockMvc.perform(get("/fizzbuzz/generate?int1=3&text1=Fizz&int2=5&text2=Buzz&limit=100")).andDo(print())
-                .andExpect(content().string(String.format("placeholder i1: %d s1: %s i2: %d s2: %s lim: %d", 3, "Fizz", 5, "Buzz", 100)));
+        this.mockMvc.perform(get("/fizzbuzz/generate?int1=2&text1=Fizz&int2=3&text2=Buzz&limit=6")).andDo(print())
+                .andExpect(content().string("1,Fizz,Buzz,Fizz,5,FizzBuzz"));
     }
 
     @Test
