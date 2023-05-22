@@ -9,6 +9,6 @@ public interface StatisticsRepository extends CrudRepository<RequestStatEntity, 
 
     RequestStatEntity findByRequest(String request);
 
-    @Query(value = "SELECT * FROM REQUEST_STAT ORDER BY hit_number LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM REQUEST_STAT ORDER BY hit_number DESC LIMIT 1", nativeQuery = true)
     RequestStatEntity findMaxHitNumber();
 }

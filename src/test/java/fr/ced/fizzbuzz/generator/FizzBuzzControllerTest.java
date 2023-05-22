@@ -13,19 +13,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.ContentResultMatchers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {FizzBuzzApplication.class})
@@ -41,8 +36,9 @@ class FizzBuzzControllerTest {
     private StatisticsRepository statisticsRepository;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        statisticsRepository.deleteAll();
     }
 
     @Test
@@ -58,6 +54,10 @@ class FizzBuzzControllerTest {
     void generate() throws Exception {
         this.mockMvc.perform(get("/fizzbuzz/generate?int1=2&text1=Fizz&int2=3&text2=Buzz&limit=6")).andDo(print())
                 .andExpect(content().string("1,Fizz,Buzz,Fizz,5,FizzBuzz"));
+        assertThat(statisticsRepository.findByRequest("/fizzbuzz/generate?int1=2&text1=Fizz&int2=3&text2=Buzz&limit=6"))
+                .isNotNull()
+                .extracting("hitNumber")
+                .isEqualTo(1);
     }
 
     @Test
@@ -71,14 +71,13 @@ class FizzBuzzControllerTest {
     @Test
     void testStats() throws Exception {
         RequestStatEntity requestStatEntity = new RequestStatEntity();
-        requestStatEntity.setHitNumber(2);
+        requestStatEntity.setHitNumber(5);
         requestStatEntity.setId(3L);
-        requestStatEntity.setRequest("/fizzbuzz/generate?int1=2&text1=Fizz&int2=3&text2=Buzz&limit=6");
+        requestStatEntity.setRequest("/fizzbuzz/generate?int1=3&text1=Fizz&int2=5&text2=Buzz&limit=10");
 
         statisticsRepository.save(requestStatEntity);
         this.mockMvc.perform(get("/fizzbuzz/stats")).andDo(print())
                 .andExpect(jsonPath("$.endpoint").value("/fizzbuzz/generate"))
-                .andExpect(jsonPath("$.hitNumber").value(2));
-        statisticsRepository.deleteAll();
+                .andExpect(jsonPath("$.hitNumber").value(5));
     }
 }

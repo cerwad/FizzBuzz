@@ -19,6 +19,11 @@ public class StatisticsService {
 
     public void countRequestCall(String request){
         RequestStatEntity requestStat = statisticsRepository.findByRequest(request);
+        if(requestStat == null){
+            requestStat = new RequestStatEntity();
+            requestStat.setRequest(request);
+            requestStat.setHitNumber(0);
+        }
         requestStat.setHitNumber(requestStat.getHitNumber()+1);
         statisticsRepository.save(requestStat);
     }
