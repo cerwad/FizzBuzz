@@ -1,6 +1,8 @@
 package fr.ced.fizzbuzz.generator;
 
 import fr.ced.fizzbuzz.FizzBuzzApplication;
+import fr.ced.fizzbuzz.stats.RequestStatEntity;
+import fr.ced.fizzbuzz.stats.StatisticsRepository;
 import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,9 @@ class FizzBuzzControllerTest {
 
     private MockMvc mockMvc;
 
+    @Autowired
+    private StatisticsRepository statisticsRepository;
+
     @BeforeEach
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
@@ -63,4 +68,17 @@ class FizzBuzzControllerTest {
                 .andExpect(jsonPath("$.detail").value("Limit cannot exceed 100"));
     }
 
+    @Test
+    void testStats() throws Exception {
+        RequestStatEntity requestStatEntity = new RequestStatEntity();
+        requestStatEntity.setHitNumber(2);
+        requestStatEntity.setId(3L);
+        requestStatEntity.setRequest("/fizzbuzz/generate?int1=2&text1=Fizz&int2=3&text2=Buzz&limit=6");
+
+        statisticsRepository.save(requestStatEntity);
+        this.mockMvc.perform(get("/fizzbuzz/stats")).andDo(print())
+                .andExpect(jsonPath("$.endpoint").value("/fizzbuzz/generate"))
+                .andExpect(jsonPath("$.hitNumber").value(2));
+        statisticsRepository.deleteAll();
+    }
 }
