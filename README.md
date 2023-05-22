@@ -27,8 +27,8 @@ request exemple: http://localhost:8080/fizzbuzz/generate?int1=3&text1=Fizz&int2=
 When accessing the url GET /fizzbuzz/stats, the server will respond with a json document indicating the most used request
 ex:
 {
-    "request": "generate?int1=1,text1=text,int2=1,text2=text,limit=50",
-    "hits": 25
+    "endpoint": "generate?int1=1&text1=text&int2=1&text2=text&limit=50",
+    "hitNumber": 25
 }
 
 ### Health check
@@ -48,3 +48,5 @@ Webpage with the rest api documentation automatically generated from the code
 - Spring boot 3 and Java 17
 - Heartbeat
 - OpenApi Specification
+- Common logging and stat computing using Spring Interceptor
+- Stat saving using async call
