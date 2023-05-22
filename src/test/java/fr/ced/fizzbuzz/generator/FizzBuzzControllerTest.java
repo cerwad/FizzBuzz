@@ -41,7 +41,7 @@ class FizzBuzzControllerTest {
     }
 
     @Test
-    public void givenWac_whenServletContext_thenItProvidesGreetController() {
+    public void givenWac_whenServletContext_thenItProvidesFizzBuzzController() {
         ServletContext servletContext = webApplicationContext.getServletContext();
 
         assertThat(servletContext).isNotNull();

@@ -1,6 +1,8 @@
 package fr.ced.fizzbuzz.generator;
 
 import fr.ced.fizzbuzz.generator.model.IntMatcher;
+import fr.ced.fizzbuzz.stats.RequestStat;
+import fr.ced.fizzbuzz.stats.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +19,8 @@ public class FizzBuzzController {
 
     private final FizzBuzzValidator fizzBuzzValidator;
     private final FizzBuzzService fizzBuzzService;
+    private final StatisticsService statisticsService;
+
     @GetMapping("/")
     public String home(){
         return "Please call /generate?int1=3&text1=Fizz&int2=5&text2=Buzz&limit=100 to test this server";
@@ -35,7 +39,8 @@ public class FizzBuzzController {
     }
 
     @GetMapping("/stats")
-    public String stats(){
-        return "placeholder stats";
+    public RequestStat stats(){
+
+        return statisticsService.getMostUsedRequest();
     }
 }
