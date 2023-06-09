@@ -11,15 +11,14 @@ public class FizzBuzzService {
 
     public String generateFizzBuzzString(IntMatcher matcher1, IntMatcher matcher2, int limit) {
         StringBuilder buffer = new StringBuilder();
+        if(matcher1.multiple() <= 0 || matcher2.multiple() <= 0){
+            return "";
+        }
         for (int i = 1; i <= limit; i++) {
-            if (i % matcher1.multiple() == 0 || i % matcher2.multiple() == 0) {
-                if (i % matcher1.multiple() == 0) {
-                    buffer.append(matcher1.text());
-                }
-                if (i % matcher2.multiple() == 0) {
-                    buffer.append(matcher2.text());
-                }
-            } else {
+            if (matcher1.isMultiple(i) || matcher2.isMultiple(i)) {
+                buffer.append(matcher1.getString(i));
+                buffer.append(matcher2.getString(i));
+           } else {
                 buffer.append(i);
             }
             if (i != limit) {

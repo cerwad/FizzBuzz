@@ -24,6 +24,7 @@ class FizzBuzzServiceTest extends Specification {
         int1    | text1     | int2   | text2   | limit     || expectedString
         3       |   "Fizz"  | 5      | "Buzz"  | 25        || "1,2,Fizz,4,Buzz,Fizz,7,8,Fizz,Buzz,11,Fizz,13,14,FizzBuzz,16,17,Fizz,19,Buzz,Fizz,22,23,Fizz,Buzz"
         1       |   "un"    | 5      | "cinq"  | 10         || "un,un,un,un,uncinq,un,un,un,un,uncinq"
+        0       |   "zero"  | 8      | "huit"  | 10         || ""
     }
 
 }

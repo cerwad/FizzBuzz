@@ -33,8 +33,8 @@ public class FizzBuzzValidator {
     }
 
     public void validateMatcher(IntMatcher matcher, int limit){
-        if(matcher.multiple() < 0){
-            throw new BadArgumentsException("An integer matcher cannot be negative");
+        if(matcher.multiple() <= 0){
+            throw new BadArgumentsException("An integer matcher cannot be negative or equal zero");
         }
         if(matcher.multiple() > limit){
             throw new BadArgumentsException("An integer matcher cannot be greater than the limit");

@@ -68,6 +68,7 @@ class FizzBuzzControllerTest {
                 .andExpect(jsonPath("$.detail").value("Limit cannot exceed 100"));
     }
 
+
     @Test
     void testStats() throws Exception {
         RequestStatEntity requestStatEntity = new RequestStatEntity();

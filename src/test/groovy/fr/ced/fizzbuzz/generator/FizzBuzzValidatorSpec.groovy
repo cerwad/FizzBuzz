@@ -70,11 +70,12 @@ class FizzBuzzValidatorSpec extends Specification {
         error.message == expectedMessage
 
         where:
-        multiple    | text      | limit     || expectedException | expectedMessage
-        -1      |   "Fizz"      | 100       || BadArgumentsException         | "An integer matcher cannot be negative"
-        101     | "Buzz"        | 100       || BadArgumentsException         | "An integer matcher cannot be greater than the limit"
-        3       | null          | 100       || BadArgumentsException         | "The replacement text cannot be empty"
-        3       | "a"*257       | 100       || BadArgumentsException         | "The replacement text max length is 256 char"
+        multiple    | text           | limit     || expectedException             | expectedMessage
+        -1          | "Fizz"         | 100       || BadArgumentsException         | "An integer matcher cannot be negative or equal zero"
+        101         | "Buzz"         | 100       || BadArgumentsException         | "An integer matcher cannot be greater than the limit"
+        0           | "zero"         | 100       || BadArgumentsException         | "An integer matcher cannot be negative or equal zero"
+        3           | null           | 100       || BadArgumentsException         | "The replacement text cannot be empty"
+        3           | "a"*257        | 100       || BadArgumentsException         | "The replacement text max length is 256 char"
     }
 
 }
